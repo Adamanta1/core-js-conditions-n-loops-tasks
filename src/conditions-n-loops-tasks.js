@@ -66,8 +66,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(king.x - queen.x) === Math.abs(king.y - queen.y)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -115,17 +122,49 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  /*
-  const romans = {
-    1: 'I',
-    4: 'IV',
-    5: 'V',
-    9: 'IX',
-    10: 'X',
-  }
-*/
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romans = [
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII',
+    'VIII',
+    'IX',
+    'X',
+    'XI',
+    'XII',
+    'XIII',
+    'XIV',
+    'XV',
+    'XVI',
+    'XVII',
+    'XVIII',
+    'XIX',
+    'XX',
+    'XXI',
+    'XXII',
+    'XXIII',
+    'XXIV',
+    'XXV',
+    'XXVI',
+    'XXVII',
+    'XXVIII',
+    'XXIX',
+    'XXX',
+    'XXXI',
+    'XXXII',
+    'XXXIII',
+    'XXXIV',
+    'XXXV',
+    'XXXVI',
+    'XXXVII',
+    'XXXVIII',
+    'XXXIX',
+  ];
+  return romans[num - 1];
 }
 
 /**
@@ -273,8 +312,20 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let left = 0;
+  let right = 0;
+  for (let i = 1; i < arr.length; i += 1) {
+    left += arr[i - 1];
+    for (let k = i + 1; k < arr.length; k += 1) {
+      right += arr[k];
+    }
+    if (left === right) {
+      return i;
+    }
+    right = 0;
+  }
+  return -1;
 }
 
 /**
@@ -298,8 +349,45 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+  }
+
+  let count = 1;
+  let startRow = 0;
+  let endRow = size - 1;
+  let startColumn = 0;
+  let endColumn = size - 1;
+
+  while (startRow <= endRow && startColumn <= endColumn) {
+    for (let i = startColumn; i <= endColumn; i += 1) {
+      matrix[startRow][i] = count;
+      count += 1;
+    }
+    startRow += 1;
+
+    for (let i = startRow; i <= endRow; i += 1) {
+      matrix[i][endColumn] = count;
+      count += 1;
+    }
+    endColumn -= 1;
+
+    for (let i = endColumn; i >= startColumn; i -= 1) {
+      matrix[endRow][i] = count;
+      count += 1;
+    }
+    endRow -= 1;
+
+    for (let i = endRow; i >= startRow; i -= 1) {
+      matrix[i][startColumn] = count;
+      count += 1;
+    }
+    startColumn += 1;
+  }
+
+  return matrix;
 }
 
 /**
